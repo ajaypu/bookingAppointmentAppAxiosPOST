@@ -59,8 +59,12 @@ function formSubmit(e) {
     email: email.value,
   };
   li(obj);
-
-  localStorage.setItem(obj.email, JSON.stringify(obj));
+  let axiosAPI = "https://crudcrud.com/api/4617feb80883486eb7e3769235c44144";
+  // localStorage.setItem(obj.email, JSON.stringify(obj));
+  axios
+    .post(`${axiosAPI}/AppointmentApp`, obj)
+    .then((response) => AddUsers(response.data))
+    .catch((err) => console.log(err));
 }
 
 window.addEventListener("DOMContentLoaded", AddUsers);
