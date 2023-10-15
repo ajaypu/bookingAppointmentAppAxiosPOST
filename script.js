@@ -3,6 +3,9 @@ const name = document.querySelector("#name");
 const email = document.querySelector("#email");
 const itemsList = document.querySelector("#items-list");
 
+/// Axios
+let axiosAPI =
+  "https://crudcrud.com/api/4617feb80883486eb7e3769235c44144/AppointmentApp";
 // Creating Edit button element
 function EditButton(obj) {
   const edtBtn = document.createElement("button");
@@ -59,21 +62,25 @@ function formSubmit(e) {
     email: email.value,
   };
   li(obj);
-  let axiosAPI = "https://crudcrud.com/api/4617feb80883486eb7e3769235c44144";
+
   // localStorage.setItem(obj.email, JSON.stringify(obj));
   axios
-    .post(`${axiosAPI}/AppointmentApp`, obj)
+    .post(axiosAPI, obj)
     .then((response) => AddUsers(response.data))
     .catch((err) => console.log(err));
 }
 
-window.addEventListener("DOMContentLoaded", AddUsers);
+window.addEventListener("DOMContentLoaded", AddNewUsersOnScreen);
 
 // Add User
-function AddUsers() {
-  let keys = Object.keys(localStorage);
-
-  for (let i = 0; i < keys.length; i++) {
-    li(JSON.parse(localStorage.getItem(keys[i])));
-  }
+function AddNewUsersOnScreen() {
+  // let keys = Object.keys(localStorage);
+  // for (let i = 0; i < keys.length; i++) {
+  // li(JSON.parse(localStorage.getItem(keys[i])));
+  // }
+  axios.get(axiosAPI).then((res) => {
+    for (let i = 0; i < res.data.length; i++) {
+      li(res.data[i]);
+    }
+  });
 }
